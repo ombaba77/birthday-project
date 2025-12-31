@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Dedicated Playlist 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+  background:
+    linear-gradient(0deg, rgba(255,255,255,.8), rgba(255,255,255,.8)),
+    repeating-linear-gradient(0deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+.page{width:100%;max-width:380px;text-align:center}
+.title{font-size:20px;font-weight:700;color:#d66a9a}
+.subtitle{font-size:14px;color:#9a6b7a;margin-bottom:18px}
+.card{background:#fff6df;border-radius:22px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.08)}
+.track-title{font-size:16px;color:#9a6b7a;margin-bottom:14px;font-weight:600}
+
+.slider{display:flex;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory}
+.slider::-webkit-scrollbar{display:none}
+.track{min-width:240px;background:#fff;border-radius:18px;padding:12px;scroll-snap-align:center;box-shadow:0 6px 18px rgba(0,0,0,.1)}
+.track img{width:100%;border-radius:14px}
+.play-btn{margin-top:10px;width:52px;height:52px;border-radius:50%;border:none;background:#e75c96;color:#fff;font-size:20px;cursor:pointer}
+.track-name{margin-top:8px;font-weight:600;color:#333}
+.track-desc{font-size:13px;color:#9a6b7a;margin-top:4px}
+
+.continue-btn{
+  margin-top:18px;
+  background:#e75c96;
+  color:#fff;
+  border:none;
+  padding:14px;
+  width:100%;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:600;
+}
+
+.back-btn{
+  position:fixed;top:12px;left:12px;width:42px;height:42px;
+  border-radius:50%;background:#fff;color:#e26d9c;font-size:22px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.15);
+  cursor:pointer;z-index:9999;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔴 MUSIC ENGINE (DO NOT TOUCH) -->
+<iframe src="player.html" id="musicFrame" style="display:none;"></iframe>
+
+<div class="back-btn" onclick="location.href='letter.html'">←</div>
+
+<div class="page">
+  <div class="title">A Dedicated Playlist For You 💖</div>
+  <div class="subtitle">I Hope You’ll Like It</div>
+
+  <div class="card">
+    <div class="track-title">Choose a track to start vibing ✨</div>
+
+    <div class="slider">
+
+      <div class="track">
+        <img src="thumb1.gif">
+        <button class="play-btn" onclick="playSong(0)">▶</button>
+        <div class="track-name">Dil Cheez Tujhe Dedi</div>
+        <div class="track-desc">Dedicated from my heart 💕</div>
+      </div>
+
+      <div class="track">
+        <img src="thumb2.gif">
+        <button class="play-btn" onclick="playSong(1)">▶</button>
+        <div class="track-name">Even If The World Ends</div>
+        <div class="track-desc">Always with you 🤍</div>
+      </div>
+
+      <div class="track">
+        <img src="thumb3.png">
+        <button class="play-btn" onclick="playSong(2)">▶</button>
+        <div class="track-name">Haa Tum bilkul waisi ho</div>
+        <div class="track-desc">Jaisa maine socha tha ✨</div>
+      </div>
+
+    </div>
+
+    <button class="continue-btn" onclick="location.href='cards.html'">
+      Continue to Next ✨
+    </button>
+  </div>
+</div>
+
+<script>
+function playSong(index){
+  document.getElementById("musicFrame").contentWindow.postMessage(
+    { type:"PLAY", index:index },
+    "*"
+  );
+}
+</script>
+
+</body>
+</html>

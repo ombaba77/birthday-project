@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Music Player Engine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<audio id="bgMusic" loop></audio>
+
+<script>
+const songs = [
+  "song1.mp3",
+  "song2.mp3",
+  "song3.mp3"
+];
+
+const audio = document.getElementById("bgMusic");
+let currentIndex = null;
+
+/* MESSAGE LISTENER */
+window.addEventListener("message", (e) => {
+  if (!e.data || !e.data.type) return;
+
+  if (e.data.type === "PLAY") {
+    const index = e.data.index;
+
+    // Agar same song already loaded hai
+    if (currentIndex === index) {
+      if (audio.paused) {
+        audio.play().catch(()=>{});
+      }
+      return;
+    }
+
+    // Naya song
+    currentIndex = index;
+    audio.src = songs[index];
+    audio.load();
+
+    audio.play().catch(() => {
+      // mobile browser safety
+      console.log("Autoplay blocked, waiting for user interaction");
+    });
+  }
+
+  if (e.data.type === "STOP") {
+    audio.pause();
+  }
+});
+</script>
+
+</body>
+</html>

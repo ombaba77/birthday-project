@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Special Cards 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+  background:
+    linear-gradient(0deg, rgba(255,255,255,.85), rgba(255,255,255,.85)),
+    repeating-linear-gradient(0deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:16px;
+}
+
+.page{width:100%;max-width:380px;text-align:center}
+.title{font-size:20px;font-weight:700;color:#d66a9a}
+.subtitle{font-size:14px;color:#9a6b7a;margin-bottom:12px}
+
+.card-box{
+  background:#fff6df;
+  border-radius:22px;
+  padding:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+}
+
+/* FLIP CARDS */
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
+.flip-card{perspective:1000px}
+.flip-inner{
+  position:relative;
+  width:100%;
+  height:120px;
+  transition:transform .8s;
+  transform-style:preserve-3d;
+  cursor:pointer;
+}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+
+.flip-front,.flip-back{
+  position:absolute;
+  width:100%;
+  height:100%;
+  backface-visibility:hidden;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.1);
+}
+.flip-front{background:#fff}
+.flip-front img{max-width:100%;max-height:100%}
+.flip-back{
+  background:#fff;
+  transform:rotateY(180deg);
+  font-size:14px;
+  color:#444;
+  line-height:1.5;
+}
+
+/* PROGRESS */
+.progress{margin:16px 0 6px;height:6px;background:#f1c9d6;border-radius:999px;overflow:hidden}
+.progress span{display:block;height:100%;width:0%;background:#e75c96;transition:.6s}
+.done-text{font-size:14px;color:#d66a9a;margin-top:8px;display:none}
+
+/* CONTINUE */
+.continue-btn{
+  margin-top:14px;
+  background:#e75c96;
+  color:#fff;
+  border:none;
+  padding:14px;
+  width:100%;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:600;
+  display:none;
+}
+
+/* BACK */
+.back-btn{
+  position:fixed;
+  top:12px;
+  left:12px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#fff;
+  color:#e26d9c;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.15);
+  cursor:pointer;
+  z-index:10;
+}
+
+/* POPUP */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(120,160,255,.35);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+}
+.popup{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  width:85%;
+  max-width:320px;
+}
+.popup h3{color:#e75c96;margin-bottom:8px}
+.popup p{font-size:14px;color:#555}
+.popup button{
+  margin-top:14px;
+  padding:12px;
+  width:100%;
+  border-radius:999px;
+  border:none;
+  font-weight:600;
+}
+.primary{background:#e75c96;color:#fff}
+.secondary{background:#f1c9d6;color:#333;margin-top:8px}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 MUSIC ENGINE (SAME AS 3RD PAGE) -->
+<iframe src="player.html" id="musicFrame" style="display:none;"></iframe>
+
+<div class="back-btn" onclick="location.href='music.html'">←</div>
+
+<div class="page">
+  <div class="title">Some Special Cards For You 💖</div>
+  <div class="subtitle">Click each card to reveal a special message!</div>
+
+  <div class="card-box">
+
+    <div class="cards">
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front"><img src="card1.png"></div>
+          <div class="flip-back">
+            I love the way your beautiful eyes find me, as if they know my heart before I speak 💖
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front"><img src="card2.png"></div>
+          <div class="flip-back">
+            Your smile isn’t just something I see, it’s something I feel, and it stays with me long after the moment passes ✨
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="flipCard(this)">
+        <div class="flip-inner">
+          <div class="flip-front"><img src="card3.png"></div>
+          <div class="flip-back">
+            When your hair falls around your face, it feels like the world slows down just to let me look. 🌸
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="progress"><span id="bar"></span></div>
+    <div class="done-text" id="doneText">
+      Amazing! You've discovered all the messages! 🎉
+    </div>
+
+    <button class="continue-btn" id="continueBtn" onclick="openPopup()">
+      Continue 💌
+    </button>
+
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <h3>All Messages Unlocked! 🎉</h3>
+    <p>Each message is a piece of my heart that belongs to you forever ✨</p>
+<button class="primary" onclick="location.href='video.html'">
+  Click to see your surprise 🎁
+</button>
+    <button class="secondary" onclick="closePopup()">Stay here a bit longer</button>
+  </div>
+</div>
+
+<script>
+/* 🔥 RESUME MUSIC ON PAGE LOAD */
+window.addEventListener("load",()=>{
+  const lastSong = localStorage.getItem("songIndex");
+  if(lastSong !== null){
+    document.getElementById("musicFrame").contentWindow.postMessage(
+      { type:"PLAY", index:Number(lastSong) },
+      "*"
+    );
+  }
+});
+
+let flipped = new Set();
+
+function flipCard(card){
+  card.classList.toggle("flipped");
+  card.classList.contains("flipped") ? flipped.add(card) : flipped.delete(card);
+
+  const percent = (flipped.size / 3) * 100;
+  document.getElementById("bar").style.width = percent + "%";
+
+  if(flipped.size === 3){
+    document.getElementById("doneText").style.display = "block";
+    document.getElementById("continueBtn").style.display = "block";
+  }
+}
+
+function openPopup(){
+  document.getElementById("overlay").style.display = "flex";
+}
+function closePopup(){
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>

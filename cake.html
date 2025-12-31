@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --title-top:-10px;
+  --cake-width:280px;
+
+  --f1-top:8px;   --f1-left:59px;
+  --f2-top:-10px; --f2-left:139px;
+  --f3-top:-20px; --f3-left:178px;
+  --f4-top:-13px; --f4-left:98px;
+  --f5-top:7px;   --f5-left:216px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  min-height:100vh;
+  background:
+    linear-gradient(0deg, rgba(255,255,255,.85), rgba(255,255,255,.85)),
+    repeating-linear-gradient(0deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial, sans-serif;
+}
+
+.page{
+  width:100%;
+  max-width:380px;
+  text-align:center;
+  animation:surpriseIn .9s ease;
+}
+@keyframes surpriseIn{
+  from{transform:scale(.6) translateY(40px);opacity:0}
+  to{transform:scale(1) translateY(0);opacity:1}
+}
+
+.cake-wrap{
+  position:relative;
+  width:var(--cake-width);
+  margin:0 auto;
+}
+.cake-wrap img{width:100%;pointer-events:none}
+#cakeCut{display:none}
+
+.flame{
+  position:absolute;
+  width:14px;height:22px;
+  background:radial-gradient(circle at 50% 20%,#fff,#ff9800 60%,#ff4500);
+  border-radius:50%;
+  animation:flicker .15s infinite alternate;
+  cursor:pointer;
+}
+@keyframes flicker{from{transform:scaleY(1)}to{transform:scaleY(1.25)}}
+.flame.off{opacity:0;animation:none}
+
+.f1{top:var(--f1-top);left:var(--f1-left)}
+.f2{top:var(--f2-top);left:var(--f2-left)}
+.f3{top:var(--f3-top);left:var(--f3-left)}
+.f4{top:var(--f4-top);left:var(--f4-left)}
+.f5{top:var(--f5-top);left:var(--f5-left)}
+
+.smoke{
+  position:absolute;
+  width:14px;height:14px;
+  background:rgba(180,180,180,.6);
+  border-radius:50%;
+  animation:smoke 1s forwards;
+}
+@keyframes smoke{to{transform:translateY(-40px) scale(1.6);opacity:0}}
+
+.note{margin:10px 0;font-size:14px;color:#9a6b7a}
+button{
+  display:none;margin-top:14px;padding:14px;width:100%;
+  border:none;border-radius:999px;
+  background:#e75c96;color:#fff;font-weight:600;
+}
+
+#surpriseOverlay{
+  position:fixed;inset:0;z-index:9999;
+  display:none;pointer-events:none;
+}
+#surpriseOverlay img{width:100%;height:100%;object-fit:cover}
+
+.birthday-title{
+  font-family:'Comic Sans MS',cursive;
+  font-size:48px;position:relative;top:-120px;
+}
+
+/* 🎈 STARTING GIF CONTROL */
+.start-gif{
+  position: fixed;
+
+  /* POSITION */
+  top: 540px;      /* upar se distance */
+  left: 75px;     /* left se distance */
+
+  /* SIZE */
+  width: 250px;  /* gif ka size */
+
+  /* ROTATION (optional) */
+  transform: rotate(0deg);
+
+  /* LAYER */
+  z-index: 5;
+
+  pointer-events: none;
+}
+/* 🎈 STARTING GIF CONTROL */
+.start-gif2{
+  position: fixed;
+
+  /* POSITION */
+  top: 150px;      /* upar se distance */
+  left: 0px;     /* left se distance */
+
+  /* SIZE */
+  width: 120px;  /* gif ka size */
+
+  /* ROTATION (optional) */
+  transform: rotate(0deg);
+
+  /* LAYER */
+  z-index: 5;
+
+  pointer-events: none;
+}
+/* 🎈 STARTING GIF CONTROL */
+.start-gif3{
+  position: fixed;
+
+  /* POSITION */
+  top: 130px;      /* upar se distance */
+  left: 270px;     /* left se distance */
+
+  /* SIZE */
+  width: 120px;  /* gif ka size */
+
+  /* ROTATION (optional) */
+  transform: rotate(0deg);
+
+  /* LAYER */
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="birthday.mp3" loop preload="auto"></audio>
+
+<div id="surpriseOverlay"><img src="surprise.gif"></div>
+
+<!-- 🎈 FLOATING GIF -->
+<img src="cake1.gif" class="start-gif"> 
+<img src="cake2.gif" class="start-gif2">
+<img src="cake3.gif" class="start-gif3">
+
+<div class="page">
+<h1 class="birthday-title">Happy Birthday Golku 🎉</h1>
+
+<div class="cake-wrap" id="cake">
+  <img src="cake-full.png" id="cakeFull">
+  <img src="cake-cut.png" id="cakeCut">
+
+  <div class="flame f1"></div>
+  <div class="flame f2"></div>
+  <div class="flame f3"></div>
+  <div class="flame f4"></div>
+  <div class="flame f5"></div>
+</div>
+
+<div class="note" id="note">GUIDE : Cake ko ek baar click karo aur jor se phoonk maro(Blow 🌬️) aur jab flame hat jaye toh cake ko finger se swip karna</div>
+<button id="continue">Continue 🎁</button>
+</div>
+
+<script>
+const flames=[...document.querySelectorAll(".flame")];
+const cake=document.getElementById("cake");
+const cakeFull=document.getElementById("cakeFull");
+const cakeCut=document.getElementById("cakeCut");
+const note=document.getElementById("note");
+const btn=document.getElementById("continue");
+const music=document.getElementById("music");
+const surprise=document.getElementById("surpriseOverlay");
+
+let audioCtx, analyser, data, micStream;
+let blown=0, canCut=false;
+let detecting=false, unlocked=false;
+
+/* 🎉 */
+function showSurprise(){
+  surprise.style.display="block";
+  setTimeout(()=>surprise.style.display="none",3000);
+}
+
+/* 🔓 SINGLE USER UNLOCK */
+cake.addEventListener("click",()=>{
+  if(unlocked) return;
+  unlocked=true;
+
+  music.volume=0.05;
+  music.play().catch(()=>{});
+  startMic();
+},{once:true});
+
+/* 🔥 TAP */
+flames.forEach(f=>f.onclick=()=>!f.classList.contains("off")&&extinguish(f));
+
+function extinguish(f){
+  f.classList.add("off");blown++;
+
+  const r=f.getBoundingClientRect(),p=cake.getBoundingClientRect();
+  const s=document.createElement("div");
+  s.className="smoke";
+  s.style.left=(r.left-p.left+6)+"px";
+  s.style.top=(r.top-p.top)+"px";
+  cake.appendChild(s);
+  setTimeout(()=>s.remove(),1000);
+
+  if(blown===flames.length){
+    stopMic();
+    music.volume=0.6;
+    note.innerText="Swipe cake to cut 🍰";
+    canCut=true;
+    showSurprise();
+  }
+}
+
+/* 🎤 MIC */
+async function startMic(){
+  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  micStream=await navigator.mediaDevices.getUserMedia({audio:true});
+  const src=audioCtx.createMediaStreamSource(micStream);
+
+  analyser=audioCtx.createAnalyser();
+  analyser.fftSize=256;
+  src.connect(analyser);
+  data=new Uint8Array(analyser.fftSize);
+
+  detecting=true;
+  detect();
+}
+
+function stopMic(){
+  detecting=false;
+  if(micStream) micStream.getTracks().forEach(t=>t.stop());
+  if(audioCtx) audioCtx.close();
+}
+
+function detect(){
+  if(!detecting) return;
+  analyser.getByteTimeDomainData(data);
+  let sum=0;
+  for(let i=0;i<data.length;i++){
+    const v=(data[i]-128)/128;
+    sum+=v*v;
+  }
+  if(Math.sqrt(sum/data.length)*100>15){
+    flames.forEach(f=>!f.classList.contains("off")&&extinguish(f));
+  }
+  requestAnimationFrame(detect);
+}
+
+/* ✂️ CUT */
+let sx=0;
+cake.addEventListener("touchstart",e=>canCut&&(sx=e.touches[0].clientX));
+cake.addEventListener("touchend",e=>{
+  if(canCut && Math.abs(e.changedTouches[0].clientX-sx)>40){
+    cakeFull.style.display="none";
+    cakeCut.style.display="block";
+    btn.style.display="block";
+    canCut=false;
+  }
+});
+
+window.onload=showSurprise;
+// 👉 CONTINUE BUTTON → 3rd PAGE
+btn.addEventListener("click", () => {
+  window.location.href = "letter.html";
+});
+</script>
+
+</body>
+</html>

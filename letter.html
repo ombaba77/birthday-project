@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A Love Letter 💌</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+  background:
+    linear-gradient(0deg, rgba(255,255,255,.8), rgba(255,255,255,.8)),
+    repeating-linear-gradient(0deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.page{
+  width:100%;
+  max-width:380px;
+  text-align:center;
+}
+
+.title{
+  font-size:20px;
+  font-weight:700;
+  color:#d66a9a;
+}
+
+.subtitle{
+  font-size:14px;
+  color:#9a6b7a;
+  margin-bottom:14px;
+}
+
+.card{
+  background:#fff6df;
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+  position:relative;
+}
+
+/* ENVELOPE IMAGE */
+.envelope{
+  width:100%;
+  max-width:280px;
+  height:170px;
+  margin:0 auto;
+  position:relative;
+  overflow:hidden;
+  transition:.6s;
+  border-radius:12px;
+}
+
+.envelope img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.envelope.open{
+  height:0;
+  opacity:0;
+  pointer-events:none;
+}
+
+/* LETTER */
+.letter{
+  display:none;
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  text-align:left;
+  animation:fadeUp .8s ease;
+}
+
+.letter.show{display:block}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.letter h3{
+  color:#e26d9c;
+  margin-bottom:10px;
+}
+
+.letter p{
+  font-family:'Comic Sans MS', cursive;
+  font-size:15px;
+  line-height:1.6;
+  color:#333;
+}
+
+.cat{
+  position:absolute;
+  right:-10px;
+  top:-30px;
+  width:80px;
+}
+
+.btn{
+  margin-top:18px;
+  background:#e75c96;
+  color:#fff;
+  border:none;
+  padding:14px;
+  width:100%;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:600;
+  box-shadow:0 6px 16px rgba(231,92,150,.35);
+}
+
+.footer{
+  margin-top:16px;
+  font-size:13px;
+  color:#9a6b7a;
+}
+
+/* FLYING ENVELOPE */
+.flying-envelope{
+  position:fixed;
+  width:90px;
+  bottom:-40px;
+  left:-40px;
+  z-index:5;
+  animation:flyPath 8s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes flyPath{
+  0%{transform:translate(0,0) rotate(-10deg)}
+  30%{transform:translate(120px,-220px) rotate(10deg)}
+  60%{transform:translate(220px,-420px) rotate(-5deg)}
+  100%{transform:translate(360px,-720px) rotate(5deg)}
+}
+
+/* CHARACTERS */
+.character{
+  position:fixed;
+  width:140px;
+  z-index:6;
+  pointer-events:none;
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.character.boy{
+  bottom:-10px;
+  left:1px;
+  transform:rotate(-30deg);
+}
+
+.character.girl{
+  top:5px;
+  right:-10px;
+  transform:rotate(-50deg);
+}
+
+/* FADE OUT */
+.fade-out{
+  opacity:0;
+  transform:scale(0.9);
+  pointer-events:none;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  position:fixed;
+  top:12px;
+  left:12px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#fff;
+  color:#e26d9c;
+  font-size:22px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,0.15);
+  cursor:pointer;
+  z-index:9999;
+}
+</style>
+</head>
+
+<body>
+
+<div class="back-btn" onclick="goBack()">←</div>
+
+<div class="page">
+  <div class="title">A Love Letter 💌</div>
+  <div class="subtitle">From my heart to yours</div>
+
+  <div class="card">
+
+    <img src="envelope.gif" class="flying-envelope" id="flyingEnvelope">
+
+    <div class="envelope" id="envelope">
+      <img src="envelope1.png" alt="Envelope">
+    </div>
+
+    <!-- ❌ TEXT REMOVED -->
+
+    <div class="letter" id="letter">
+      <img src="cute1.gif" class="cat">
+      <h3>My Sweetest Love</h3>
+      <p>
+        My dearest Golku,<br><br>
+        Har ek moment jo tumhare saath bitaya,
+        wo ek beautiful dream jaisa lagta hai
+        jisse main kabhi uthna nahi chahta.
+        Tum meri life ka sabse precious hissa ho.
+        Har din tumhare saath ek gift jaisa hai
+        aur main har ek second ke liye grateful hoon. 💖
+        <br><br>
+        With all my love,<br>
+        Always yours 💕
+      </p>
+    </div>
+  </div>
+
+  <button class="btn" id="nextBtn" style="display:none">
+    Continue To See More ✨
+  </button>
+
+  <div class="footer">Made with love, only for you 💕</div>
+</div>
+
+<img src="boy.png" class="character boy" id="boy">
+<img src="girl.png" class="character girl" id="girl">
+
+<script>
+const env = document.getElementById("envelope");
+const letter = document.getElementById("letter");
+const nextBtn = document.getElementById("nextBtn");
+const boy = document.getElementById("boy");
+const girl = document.getElementById("girl");
+const flyingEnvelope = document.getElementById("flyingEnvelope");
+
+/* 🔥 AUTO OPEN AFTER FLYING ANIMATION */
+flyingEnvelope.addEventListener("animationend", () => {
+  env.classList.add("open");
+  boy.classList.add("fade-out");
+  girl.classList.add("fade-out");
+  flyingEnvelope.classList.add("fade-out");
+
+  setTimeout(()=>{
+    letter.classList.add("show");
+    nextBtn.style.display="block";
+  },600);
+});
+
+function goBack(){
+  window.location.href = "index.html";
+}
+nextBtn.onclick = () => {
+  window.location.href = "music.html";
+};
+</script>
+
+</body>
+</html>

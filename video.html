@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Surprise 🎁</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+  background:
+    linear-gradient(0deg, rgba(255,255,255,.85), rgba(255,255,255,.85)),
+    repeating-linear-gradient(0deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,#f7dce5 0,#f7dce5 1px,transparent 1px,transparent 40px);
+  display:flex;
+  justify-content:center;
+  align-items:flex-start; /* 🔥 CHANGED */
+  padding:10px;
+}
+
+.page{
+  width:100%;
+  max-width:380px;
+  text-align:center;
+  margin-top:0px; /* 🔥 PUSH CONTENT UP */
+}
+
+.title{
+  font-size:20px;
+  font-weight:700;
+  color:#d66a9a;
+  margin-bottom:12px;
+}
+
+.card{
+  background:#fff6df;
+  border-radius:22px;
+  padding:14px;
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+  position:relative;
+}
+
+/* VIDEO */
+.video-wrap{
+  position:relative;
+}
+
+video{
+  width:100%;
+  border-radius:16px;
+  background:#000;
+}
+
+/* CLICK TO PLAY OVERLAY */
+.play-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:600;
+  color:#fff;
+  background:rgba(0,0,0,.45);
+  border-radius:16px;
+  cursor:pointer;
+}
+
+/* STICKER (UNCHANGED) */
+.sticker{
+  position:absolute;
+  bottom:-380px;
+  left:15%;
+  transform:translateX(-50%);
+  width:160px;
+  pointer-events:none;
+}
+
+/* ACTION BAR */
+.actions{
+  margin-top:18px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+
+/* BUTTONS */
+.actions button{
+  flex:1;
+  padding:10px;
+  border-radius:999px;
+  border:none;
+  font-size:13px;
+  font-weight:600;
+  cursor:not-allowed;
+  opacity:0.5;
+}
+
+.primary{
+  background:#e75c96;
+  color:#fff;
+}
+
+.secondary{
+  background:#f1c9d6;
+  color:#333;
+}
+
+/* ENABLE AFTER VIDEO END */
+.actions button.enabled{
+  cursor:pointer;
+  opacity:1;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  position:fixed;
+  top:12px;
+  left:12px;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#fff;
+  color:#e26d9c;
+  font-size:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(0,0,0,.15);
+  cursor:pointer;
+  z-index:10;
+}
+.sticker{
+  position:absolute;
+  pointer-events:none; /* click block na ho */
+  user-select:none;
+}
+.sticker-1{
+  width:200px;              /* SIZE */
+  top:260px;                /* UP–DOWN */
+  left:50%;                 /* LEFT–RIGHT */
+  transform:
+    translateX(-50%)        /* center adjust */
+    rotate(0deg);          /* ANGLE */
+}
+.sticker-2{
+  width:140px;              /* SIZE */
+  top:400px;                /* UP–DOWN */
+  left:40%;                 /* LEFT–RIGHT */
+  transform:
+    translateX(-50%)        /* center adjust */
+    rotate(30deg);          /* ANGLE */
+}
+</style>
+</head>
+
+<body>
+
+<div class="back-btn" onclick="location.href='cards.html'">←</div>
+
+<div class="page">
+  <div class="title">Your Little Surprise 💖</div>
+
+  <div class="card">
+    <div class="video-wrap">
+      <video id="surpriseVideo" controls playsinline>
+        <source src="surprise.mp4" type="video/mp4">
+      </video>
+
+      <div class="play-overlay" id="playOverlay">
+        ▶ Click to play video
+      </div>
+    </div>
+
+    <img src="sticker.png" class="sticker">
+    <img src="sticker1.gif" class="sticker sticker-1">
+    <img src="sticker2.gif" class="sticker sticker-2">
+
+    <div class="actions">
+      <button id="finalBtn" class="primary">Final Letter 💌</button>
+      <button id="replayBtn" class="secondary">Play Again 🔁</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const video = document.getElementById("surpriseVideo");
+const overlay = document.getElementById("playOverlay");
+const finalBtn = document.getElementById("finalBtn");
+const replayBtn = document.getElementById("replayBtn");
+
+overlay.onclick = ()=>{
+  overlay.style.display="none";
+  video.play();
+};
+
+video.addEventListener("ended",()=>{
+  finalBtn.classList.add("enabled");
+  replayBtn.classList.add("enabled");
+
+  finalBtn.onclick = ()=> location.href="final.html";
+  replayBtn.onclick = ()=>{
+    video.currentTime = 0;
+    video.play();
+  };
+});
+</script>
+
+</body>
+</html>
