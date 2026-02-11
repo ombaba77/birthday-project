@@ -30,7 +30,6 @@
       gap: 26px;
     }
 
-    /* ===== CARD ===== */
     .card {
       background: #fff6df;
       border-radius: 22px;
@@ -92,7 +91,6 @@
       pointer-events: auto;
     }
 
-    /* ===== BOTTOM SECTION ===== */
     .bottom {
       width: 100%;
       display: flex;
@@ -132,36 +130,29 @@
       color: #9a6b7a;
     }
 
-    /* ===== ANIMATION ===== */
     @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
     }
-    .calendar-img {
-  width: 100%;
-  max-width: 260px;
-  margin: 0 auto 14px;
-  display: block;
-  border-radius: 14px;
-}
-.card {
-  position: relative;
-}
 
-.corner-gif {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 70px;
-  height: auto;
-  pointer-events: none;
-}
+    .calendar-img {
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto 14px;
+      display: block;
+      border-radius: 14px;
+    }
+
+    .card { position: relative; }
+
+    .corner-gif {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 70px;
+      height: auto;
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -169,7 +160,6 @@
 
 <div class="page">
 
-  <!-- CARD -->
   <div class="card">
     <img src="cute1.gif" class="corner-gif" alt="cute gif">
     <div class="window-dots">
@@ -184,34 +174,28 @@
 
     <p class="desc">
       Maine tumhare liye kuch banaya hai,<br>
-abhi apne birthday tak wait karo,<br>
-tab ye unlock ho jayega 😊<br>
+      abhi apne birthday tak wait karo,<br>
+      tab ye unlock ho jayega 😊<br>
       I wanted to do something special for you,<br>
       so I made something special just for you…
     </p>
 
-   <button class="btn" id="openBtn">
-  Open My Heart ✨
-</button>
+    <button class="btn" id="openBtn">
+      Open My Heart ✨
+    </button>
   </div>
 
-  <!-- HOST + COUNTDOWN -->
   <div class="bottom">
     <div class="host">
       <img src="host.png" alt="Host">
     </div>
 
     <div class="countdown-box">
-
-  <!-- Calendar Image -->
-  <img src="calendar.png" class="calendar-img" alt="Calendar">
-
-  <!-- Countdown Text -->
-  <div class="countdown" id="countdown">
-    Unlocking soon…
-  </div>
-
-</div>
+      <img src="calendar.png" class="calendar-img" alt="Calendar">
+      <div class="countdown" id="countdown">
+        Unlocking soon…
+      </div>
+    </div>
   </div>
 
   <div class="footer">Made with love, only for you 💕</div>
@@ -219,10 +203,7 @@ tab ye unlock ho jayega 😊<br>
 </div>
 
 <script>
-  // 🔧 PREVIEW MODE
-  const PREVIEW_MODE = false; // true = preview unlock, false = real lock
-
-  // 🎂 11 Feb 2026, 12:00 AM
+  const PREVIEW_MODE = true;
   const targetDate = new Date("2026-02-11T00:00:00").getTime();
 
   const btn = document.getElementById("openBtn");
@@ -232,21 +213,18 @@ tab ye unlock ho jayega 😊<br>
     const now = Date.now();
     const diff = targetDate - now;
 
-    // ✅ PREVIEW MODE ON → always unlocked
     if (PREVIEW_MODE) {
       countdownEl.textContent = "It's Time 💖";
       btn.classList.add("unlocked");
       return;
     }
 
-    // ✅ Countdown finished → unlock
     if (diff <= 0) {
       countdownEl.textContent = "It’s time 💖";
       btn.classList.add("unlocked");
       return;
     }
 
-    // ❌ Still locked
     btn.classList.remove("unlocked");
 
     const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -260,11 +238,20 @@ tab ye unlock ho jayega 😊<br>
 
   setInterval(update, 1000);
   update();
+
   btn.addEventListener("click", () => {
-  if (btn.classList.contains("unlocked")) {
-    window.location.href = "cake.html";
-  }
-});
+    if (btn.classList.contains("unlocked")) {
+
+      const enteredPassword = prompt("Enter the secret password 💖");
+
+      if (enteredPassword === "180319") {
+        window.location.href = "cake.html";
+      } else if (enteredPassword !== null) {
+        alert("Wrong password ❌");
+      }
+
+    }
+  });
 </script>
 
 </body>
